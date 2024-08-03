@@ -1,0 +1,62 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Settings {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <div>
+        <div class="d-flex justify-content-center align-items-center" style="min-height: 20vh;">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-5">
+                <div></div>
+                <div>
+                    <form action="/upload-video" method="post" enctype="multipart/form-data" onsubmit="uploadFile(event)">
+                        <input type="file" name="file" id="upload-file" required onchange='getFileName(event)'
+                               class="btn btn-primary d-inline-flex align-items-center me-2 dropdown-toggle file_multi_video"/>
+                        <input type="submit" value="Upload"
+                               class="btn btn-primary d-inline-flex align-items-center me-2 dropdown-toggle">
+                    </form>
+                </div>
+            </div>
+
+            {#    <div class="d-flex justify-content-center align-items-center" id="video-ele" style="visibility: hidden;">#}
+            {#        <video controls width="90%" autoplay style="margin-left: 5%;" id="hls-video">#}
+            {#            <source src="{{src}}" type="video/mp4" id="file_video" />#}
+            {#            Your browser does not support HTML video.#}
+            {#        </video>#}
+            {#    </div>#}
+        </div>
+
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="text-center">
+                <p>
+                <div class="d-block">
+                    <img id="upload-file-image" width="250px" src="{{ config.ASSETS_ROOT }}/img/upload-file.svg"
+                         alt="SVG Image">
+                </div>
+                </p>
+                <p >
+                <div class="h2" style="display: block" id="upload-file-loading">Loading... Please wait a few minutes</div>
+                <div id="my-loader" style="width: 3em;height: 3em;" class="ldld bare d-inline-block dark ml-2 align-middle"></div>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+    <script>
+        fileInput = document.getElementById('upload-file');
+        loading = document.getElementById('upload-file-loading');
+        if (fileInput.files.length > 0) {
+            loading.style.display = 'block';
+        } else {
+            loading.style.display = 'none';
+        }
+    </script>
+
+{% endblock javascripts %}

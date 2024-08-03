@@ -1,0 +1,258 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Settings {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+{#<div class="h2 d-flex justify-content-center align-items-center">Video Detail</div>#}
+{#<div class="h4 d-flex justify-content-start align-items-center p-2"><b>Name:&nbsp;</b>{{ video_name }}</div>#}
+{#<div class="mb-4"></div>#}
+{#<div class="d-flex text-center justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">#}
+{#<div class="d-flex justify-content-center align-items-center">#}
+{#    <div>#}
+{#        <video controls width="400px" autoplay>#}
+{#            <source src="{{ config.VIDEO_ROOT }}/{{ src }}" type="video/mp4"/>#}
+{#            Your browser does not support HTML video.#}
+{#        </video>#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#<div class="d-flex flex-column">#}
+{#    <div class="p-2">#}
+{#        <div class="h5 d-flex justify-content-center align-items-center" style="color:red; display: {{ 'float!important' if violatedActionNo > 0 else 'none!important' }}">* Video contains suspicious action</div>#}
+{#    </div>#}
+{#    <div class="p-2">#}
+{#        <div class="h4">#}
+{#            <b>Classes action in video: </b>{{ video.labels }}#}
+{#        </div>#}
+{#    </div>#}
+{#    <div class="p-2">#}
+{#        {% if video.length %}#}
+{#            <div class="h4 d-flex justify-content-start align-items-center"><b>Duration: </b> &nbsp;{{ video.length // 60 }}:{{ "%02d"|format(video.length % 60) }}</div>#}
+{#        {% endif %}#}
+{#    </div>#}
+{#    <div class="p-2">#}
+{#        <div class="h5 d-flex justify-content-start align-items-center"><button href="#" class="btn btn-primary" onclick="collapseEl()">Detail time</button></div>#}
+{#    </div>#}
+{#</div>#}
+{##}
+{##}
+{#<div class="card border-0 shadow mb-4">#}
+{#    <div id="collapse" class="collapse">#}
+{#        <div class="card-body">#}
+{#            <div class="table-responsive">#}
+{#                <table class="table table-centered rounded table-hover ">#}
+{#                    <thead>#}
+{#                        <tr class="table-info">#}
+{#                            <th class="border-0 rounded-start col-1">No</th>#}
+{#                            <th class="border-0 col-3">Time</th>#}
+{#                            <th class="border-0 col-4">Action</th>#}
+{#                            <th class="border-0 rounded-end col-4"></th>#}
+{#                        </tr>#}
+{#                    </thead>#}
+{#                    <tbody>#}
+{#                        {% for item in data %}#}
+{#                        <!-- Item -->#}
+{#                        <tr>#}
+{#                            <td class=" fw-bold col-1 align-middle">{{ loop.index }}</td>#}
+{#                            <td class=" fw-bold col-3 align-middle">{{item.time}}</td>#}
+{#                            <td class=" fw-bold col-4 align-middle">#}
+{#                                {% if item.action %}#}
+{#                                {{item.action}}#}
+{#                                {% endif %}#}
+{#                            </td>#}
+{#                            <td class=" fw-bold col-4 align-middle">#}
+{#                                <img src="data:image/jpeg;base64, {{ item.image }}" alt={{item.time}}>#}
+{#                            </td>#}
+{#                        </tr>#}
+{#                        <!-- End of Item -->#}
+{#                        {% endfor %}#}
+{#                    </tbody>#}
+{#                </table>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card bg-yellow-100 border-0 shadow">
+                <div class="card-header d-sm-flex flex-row align-items-center flex-0">
+                    <div class="d-block mb-3 mb-sm-0">
+                        <div class="fs-3 fw-bold mb-2">Video Detail</div>
+                        <div class="fs-5 fw-normal mb-2"><span class="fs-5 fw-extrabold">Name:&nbsp;</span>{{ video_name }}</div>
+                        <div class="small mt-2">
+                            <span class="fs-6 text-danger fw-bold" style="color:red; display: {{ 'float!important' if violatedActionNo > 0 else 'none!important' }}">* Video contains suspicious action</span>
+                        </div>
+                    </div>
+                    <div class="d-flex ms-auto">
+                        {% for label in video.labels.split(',') %}
+                            {% if 'lifting' not in label and 'stealing' not in label %}
+                            <a href="#" class="btn btn-success text-dark btn-sm me-2">{{ label }}</a>
+                            {% endif %}
+                            {% if 'lifting' in label or 'stealing' in label %}
+                            <a href="#" class="btn btn-danger text-dark btn-sm me-2">{{ label }}</a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card-body p-2 h-25-m">
+                    <div class="ct-chart-sales-value ct-double-octave ct-series-g">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div>
+                                <video controls width="400px" autoplay>
+                                    <source src="{{ config.VIDEO_ROOT }}/{{ src }}" type="video/mp4"/>
+                                    Your browser does not support HTML video.
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="row mt-4">
+                <div class="col-12 mb-4">
+                    <div class="card border-0 shadow">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h2 class="fs-5 fw-bold mb-0">Summary</h2>
+                                    <div class="d-flex ms-auto">
+                                        <button href="#" class="btn btn-outline-success" onclick="collapseSummaryEl()">Click to view detail</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% if contain_suspicous_activies %}
+                        <div class="table-responsive collapse" id="summary-collapse">
+                            <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th class="border-bottom" scope="col">No</th>
+                                    <th class="border-bottom" scope="col">Time</th>
+                                    <th class="border-bottom" scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in data if 'lifting' in item.action or 'stealing' in item.action %}
+                                <tr>
+                                    <th class="text-gray-900" scope="row">
+                                        {{ loop.index }}
+                                    </th>
+                                    <td class="fw-bolder text-gray-500">
+                                        {{ item.time }}
+                                    </td>
+                                    <td class="fw-bolder text-gray-500">
+                                        {% if item.action %}
+                                            {% if 'lifting' not in item.action and 'stealing' not in item.action %}
+                                                <a href="#"
+                                                   class="btn btn-success text-dark btn-sm me-2">{{ item.action }}</a>
+                                            {% endif %}
+                                            {% if 'lifting' in item.action or 'stealing' in item.action %}
+                                                <a href="#"
+                                                   class="btn btn-danger text-dark btn-sm me-2">{{ item.action }}</a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
+                        {% if contain_suspicous_activies == False %}
+                            <div class="fs-3 fw-bold mb-2 p-4">No any suspicious activity in video</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+        <div>
+                <div class="col-12 mb-4">
+                    <div class="card border-0 shadow">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="d-block mb-3 mb-sm-0">
+                                    <div class="fs-3 fw-bold mb-2">Detail video</div>
+                                </div>
+                                <div class="d-flex ms-auto">
+                                    <button href="#" class="btn btn-outline-success" onclick="collapseEl()">Click to view detail</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+
+                            <div id="collapse" class="collapse">
+                                <div class="row">
+                                    {% for item in data %}
+                                        <div class="col-12 col-sm-6 col-xl-4 mb-4">
+                                            <div class="card border-0 shadow">
+                                                <div class="card-body">
+                                                    <div class="row d-block d-xl-flex align-items-center">
+                                                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                                                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                                                {#                                <svg class="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path></svg>#}
+                                                                <img src="data:image/jpeg;base64, {{ item.image }}"
+                                                                     alt={{ item.time }}>
+                                                            </div>
+                                                            <div class="d-sm-none">
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-xl-7 px-xl-0">
+                                                            <div class="fw-extrabold mb-2">Time: {{ item.time }}</div>
+                                                            <div class="d-none d-sm-block">
+                                                                {% if item.action %}
+                                                                    {% if 'lifting' not in item.action and 'stealing' not in item.action %}
+                                                                        <a href="#"
+                                                                           class="btn btn-success text-dark btn-sm me-2">{{ item.action }}</a>
+                                                                    {% endif %}
+                                                                    {% if 'lifting' in item.action or 'stealing' in item.action %}
+                                                                        <a href="#"
+                                                                           class="btn btn-danger text-dark btn-sm me-2">{{ item.action }}</a>
+                                                                    {% endif %}
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End of Item -->
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+    <script>
+    function collapseEl(event) {
+        collapse = document.getElementById('collapse');
+        if (collapse.className == 'collapse') {
+            collapse.className = 'collapsed'
+        } else {
+            collapse.className = 'collapse'
+        }
+    }
+
+    function collapseSummaryEl(event) {
+        collapse = document.getElementById('summary-collapse');
+        if (collapse.className.includes('collapsed')) {
+            collapse.className = collapse.className.replace('collapsed', 'collapse');
+        } else {
+            collapse.className = collapse.className.replace('collapse', 'collapsed');
+        }
+    }
+    </script>
+{% endblock javascripts %}
+

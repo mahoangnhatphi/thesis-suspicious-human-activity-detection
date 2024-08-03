@@ -1,0 +1,86 @@
+{% extends "layouts/base.html" %} {% block title %} Tables {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %} {% block content %}
+
+<div>
+    <h1 class="h2 pt-4 text-center">Suspicious detection system</h1>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-3">
+        <div></div>
+        <div>
+            <a href="/upload-video.html">
+                <button class="btn btn-primary d-inline-flex align-items-center me-2 dropdown-toggle"
+                    aria-haspopup="true" aria-expanded="false">
+                    <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    Upload new video
+                </button>
+            </a>
+            
+            <p>
+                {% if add_video %}
+                <span class="text-success">{{ add_video }}</span>
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    <div class="h5 align-items-start p-2">Videos</div>
+    <div class="card border-0 shadow mb-4 ">
+        <div class="card-body">
+            <div class="table-responsive">
+            <div style="overflow-x:auto;">
+                <table class="table table-centered rounded table-hover">
+                    <thead>
+                        <tr class="table-info">
+                            <th class="border-0 rounded-start col-1">No</th>
+                            <th class="border-0 col-3">Upload Time</th>
+                            <th class="border-0 col-3">Name</th>
+                            <th class="border-0 col-4">Labels</th>
+                            <th class="border-0 rounded-end col-4" style="padding-left: 4%;">View</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in data %}
+                        <!-- Item -->
+                        <tr>
+                            <td class=" fw-bold col-1 align-middle">{{ loop.index }}</td>
+                            <td class=" fw-bold col-3 align-middle">{{item.upload_time}}</td>
+                            <td class=" fw-bold col-3 align-middle">{{item.video_id}}</td>
+                            <td class=" fw-bold col-4 align-middle">
+                                {% if item.labels %}
+                                    {% if 'lifting' in item.labels or 'stealing' in item.labels %}
+                                        <div style="color:red">
+                                            {{item.labels}}
+                                        </div>
+                                    {% endif %}
+                                    {% if 'lifting' not in item.labels and 'stealing' not in item.labels %}
+                                        {{item.labels}}
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                            <td class=" fw-bold col-4 align-middle">
+                                <a href="/videos/{{item.video_id}}" class="nav-link">
+                                    <video width="250" pause>
+                                        <source src="{{ config.VIDEO_ROOT }}/{{item.video_id}}" type="video/mp4" />
+                                        <source src="{{ config.VIDEO_ROOT }}/{{item.video_id}}" type="video/avi" />
+                                        Your browser does not support HTML video.
+                                    </video>
+                                </a>
+                            </td>
+                        </tr>
+                        <!-- End of Item -->
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
