@@ -1,6 +1,6 @@
 {% extends "layouts/base-fullscreen.html" %}
 
-{% block title %} Sign UP {% endblock %} 
+{% block title %} Sign Up {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -31,7 +31,7 @@
 
                                 <div class="d-grid">
                                     <a href="{{ url_for('authentication_blueprint.login') }}" 
-                                       class="btn btn-gray-800">Sign IN</a>
+                                       class="btn btn-gray-800">Sign in</a>
                                 </div>
 
                             {% else %}
@@ -90,7 +90,7 @@
                                 <div class="d-flex justify-content-center align-items-center mt-4">
                                     <span class="fw-normal">
                                         Already have an account? 
-                                        <a href="{{ url_for('authentication_blueprint.login') }}" class="fw-bold">Sign IN</a>
+                                        <a href="{{ url_for('authentication_blueprint.login') }}" class="fw-bold">Sign in</a>
                                     </span>
                                 </div>
                             
@@ -101,6 +101,9 @@
                 </div>
             </div>
         </section>
+        <div class="d-flex align-items-center justify-content-center btn-upgrade-pro w-100">
+            <span>© PhiMHN</span>
+        </div>
     </main>
 
 {% endblock content %}
