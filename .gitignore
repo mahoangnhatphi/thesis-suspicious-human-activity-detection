@@ -162,3 +162,4 @@ cython_debug/
 .idea/
 .vs/
 web_app/apps/static/assets/videos/
+*Suspicious-Human-Activity-Detection-LRCN/Dataset/*
